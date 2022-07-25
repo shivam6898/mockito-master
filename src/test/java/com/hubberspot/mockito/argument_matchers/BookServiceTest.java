@@ -25,6 +25,7 @@ public class BookServiceTest {
 	public void testUpdatePrice() {
 		Book book1 = new Book("1234", "Mockito In Action", 600, LocalDate.now());
 		Book book2 = new Book("1234", "Mockito In Action", 500, LocalDate.now());
+		// any()  method only used in stubbing on method  not outside
 		when(bookRepository.findBookById(any(String.class))).thenReturn(book1);
 		bookService.updatePrice("1234", 500);
 		verify(bookRepository).save(book2);
@@ -36,6 +37,7 @@ public class BookServiceTest {
 	public void testInvalidUseOfArgumentMatchers() {
 		Book book = new Book("1234", "Mockito In Action", 600, LocalDate.now());
 		when(bookRepository.findBookByTitleAndPublishedDate(eq("Mockito In Action"), any())).thenReturn(book);
+		//arguments matcher we need to  pass to all arguments
 		Book actualBook = bookService.getBookByTitleAndPublishedDate(eq("Mockito In Action"), any());
 		assertEquals("Mockito In Action", actualBook.getTitle());
 	}
@@ -43,7 +45,7 @@ public class BookServiceTest {
 	@Test
 	public void testSpecificTypeOfArgumentMatchers() {
 		Book book = new Book("1234", "Mockito In Action", 600, LocalDate.now());
-		when(bookRepository.findBookByTitleAndPriceAndIsDigital(anyString(), anyInt(), anyBoolean())).thenReturn(book);
+		when(bookRepository.findBookByTitleAndPriceAndIsDigital(any(), anyInt(), anyBoolean())).thenReturn(book);
 		Book actualBook = bookService.getBookByTitleAndPriceAndIsDigital("Mockito In Action", 600, true);
 		assertEquals("Mockito In Action", actualBook.getTitle());
 	}
