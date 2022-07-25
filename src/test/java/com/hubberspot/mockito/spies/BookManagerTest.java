@@ -18,7 +18,9 @@ public class BookManagerTest {
 
 	@InjectMocks
 	private BookManager bookManager;
-	
+
+
+	//when there is need to Mock one method and Actually normal call  the method then  use @Spy
 	@Spy
 	private BookService bookService;
 	
